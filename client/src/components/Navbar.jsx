@@ -2,7 +2,7 @@
 import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
-
+import Cookies from "js-cookie";
 export default function Navbar() {
 
     const handleLogout = async () => {
@@ -11,7 +11,10 @@ export default function Navbar() {
             await axios.get(`${apiUrl}/api/v1/user/logout`, {
                 withCredentials: true
             });
-            window.location.href = '/login';
+
+            Cookies.remove('token');
+            Cookies.remove('Ltoken');
+            window.location.href = '/';
         } catch (err) {
             console.log(err);
         }

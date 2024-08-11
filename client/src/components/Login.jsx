@@ -10,9 +10,7 @@ export default function Login() {
     const navigate = useNavigate();
     const { status, error, user } = useSelector((state) => state.auth);
 
-    useEffect(() => {
-        if (user) navigate('/');
-    }, [user, navigate]);
+
 
     useEffect(() => {
         dispatch(verifyToken());

@@ -232,6 +232,11 @@ export const deactivateUser = async (req, res) => {
     }
 }
 
+/**
+ * @UPDATE_USER
+ * @ROUTE @POST {{URL}}/api/v1/user/deactivate
+ * @ACCESS Private (Logged in user only)
+ */
 export const logout = asyncHandler(
     async (req, res) => {
         res.cookie('token', null, {

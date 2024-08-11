@@ -28,6 +28,7 @@ export const login = createAsyncThunk('auth/login', async (user, { rejectWithVal
         // frontend and backend are on the same domain 
         if (response.status === 200) {
             Cookies.set('Ltoken', response.data.token, { expires: 7 });
+            window.location.href = '/';
         }
 
         return response.data;
