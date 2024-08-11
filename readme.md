@@ -14,6 +14,11 @@ This project is a full-stack application for managing users, built using the MER
 - **Frontend**: React application located in the `/client` directory.
 - **Backend**: Express application located in the `/server` directory.
 
+## Tech Stack
+- **Frontend**: React.Js, Tailwind CSS, Redux Toolkit, React Router.
+- **Backend**: Node.Js, Express
+- **Database**: MongoDB
+
 ## Deployment
 
 - **Frontend**: [https://ims-mern-azns.vercel.app](https://ims-mern-azns.vercel.app/)
