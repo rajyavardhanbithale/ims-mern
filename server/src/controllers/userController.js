@@ -175,7 +175,7 @@ export const deleteUser = async (req, res) => {
 
     // checking if user is in the record
     const user = await User.findOne({ email });
-
+    
     if (!user) {
         return res.status(400).json({ message: "User not found" });
     }
