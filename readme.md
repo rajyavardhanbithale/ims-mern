@@ -1,6 +1,6 @@
-# Inventory Management System (MERN Stack)
+# Social Media Platform Development (MERN Stack)
 
-This project is a full-stack application for managing inventory, built using the MERN stack **(MongoDB, Express.js, React.js, Node.js)**. It includes user management functionalities such as user signup, login, JWT-based authentication, and various user operations. The project is structured with a React frontend and an Express backend, with testing and deployment configurations included.
+This project is a full-stack application for managing users, built using the MERN stack **(MongoDB, Express.js, React.js, Node.js)**. It includes user management functionalities such as user signup, login, JWT-based authentication, and various user operations. The project is structured with a React frontend and an Express backend, with testing and deployment configurations included.
 
 ## Features
 
