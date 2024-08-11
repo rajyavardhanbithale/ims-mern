@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
 import { AiOutlineClose } from "react-icons/ai";
 
-const ConfirmPopup = ({ isOpen, onClose, onConfirm, action }) => {
+export default function ConfirmPopup({ isOpen, onClose, onConfirm, action }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -73,4 +72,4 @@ const ConfirmPopup = ({ isOpen, onClose, onConfirm, action }) => {
     );
 };
 
-export default ConfirmPopup;
+

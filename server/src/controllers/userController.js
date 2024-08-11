@@ -234,8 +234,8 @@ export const deactivateUser = async (req, res) => {
 }
 
 /**
- * @UPDATE_USER
- * @ROUTE @POST {{URL}}/api/v1/user/deactivate
+ * @LOGOUT
+ * @ROUTE @POST {{URL}}/api/v1/user/logout
  * @ACCESS Private (Logged in user only)
  */
 export const logout = asyncHandler(

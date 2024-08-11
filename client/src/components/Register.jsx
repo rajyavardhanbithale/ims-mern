@@ -8,7 +8,7 @@ export default function Signup() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [localMessage, setLocalMessage] = useState(""); // Local state for validation messages
+    const [localMessage, setLocalMessage] = useState("");
     const dispatch = useDispatch();
     const { status, error, message } = useSelector((state) => state.auth);
 

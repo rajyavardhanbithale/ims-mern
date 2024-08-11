@@ -31,7 +31,6 @@ export default function Dashboard() {
     const [actionType, setActionType] = useState("");
     const navigate = useNavigate();
 
-    console.log(document.cookie);
 
 
     useEffect(() => {
@@ -39,8 +38,6 @@ export default function Dashboard() {
             const apiUrl = import.meta.env.VITE_BACKEND_ENDPOINT_URL;
             const userJWT = Cookies.get("Ltoken");
             const decoded = jwtDecode(userJWT);
-
-            console.log(decoded);
 
             try {
                 const res = await axios.get(
@@ -203,7 +200,7 @@ export default function Dashboard() {
                                     />
                                 </div>
 
-                                <div className="flex justify-center items-center gap-5 mt-5">
+                                <div className="flex justify-center items-center align-middle gap-5 mt-5">
                                     <input
                                         type="file"
                                         accept="image/*"
@@ -320,7 +317,7 @@ export default function Dashboard() {
                                 />
                             </div>
 
-                            <div className="flex justify-end space-x-4">
+                            <div className="flex flex-wrap gap-3 sm:gap-0 justify-center sm:justify-end space-x-4">
                                 <button
                                     type="button"
                                     onClick={handleCancel}

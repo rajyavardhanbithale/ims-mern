@@ -28,7 +28,6 @@ function App() {
         verifyToken();
     }, []);
 
-    // Determine if Navbar should be hidden
     const hideNavbar = location.pathname === '/login' || location.pathname === '/register';
 
     return (

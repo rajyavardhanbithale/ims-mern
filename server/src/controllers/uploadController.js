@@ -1,5 +1,5 @@
 import path from 'path';
-import jwt from 'jsonwebtoken'; // Import jwt
+import jwt from 'jsonwebtoken'; 
 import User from "../models/User.js";
 
 /**

@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser';
 
 const app = express();
 app.use(bodyParser.json());
-app.use(cookieParser()); // Add this line
+app.use(cookieParser());
 app.use('/api/v1/user', userRoute);
 
 beforeAll(async () => {
@@ -22,7 +22,7 @@ afterAll(async () => {
 describe('User Controller Tests', () => {
     let token;
 
-    it('should sign up a new user', async () => {
+    it('sign up a new user', async () => {
         const response = await request(app)
             .post('/api/v1/user/signup')
             .send({
@@ -34,7 +34,7 @@ describe('User Controller Tests', () => {
         expect(response.body.message).toBe('user registration completed');
     });
 
-    it('should log in an existing user', async () => {
+    it('log in an existing user', async () => {
         const response = await request(app)
             .post('/api/v1/user/login')
             .send({
@@ -43,10 +43,10 @@ describe('User Controller Tests', () => {
             });
         expect(response.status).toBe(200);
         expect(response.body.token).toBeDefined();
-        token = response.body.token; // Save the token for subsequent tests
+        token = response.body.token; 
     });
 
-    it('should verify JWT token', async () => {
+    it('verify JWT token', async () => {
         const response = await request(app)
             .get('/api/v1/user/verify-jwt')
             .set('Cookie', `token=${token}`);
@@ -54,7 +54,7 @@ describe('User Controller Tests', () => {
         expect(response.body.message).toBe('Authorized');
     });
 
-    it('should get user details', async () => {
+    it('get user details', async () => {
         const response = await request(app)
             .get('/api/v1/user/get')
             .query({ username: 'walter' })
@@ -63,7 +63,7 @@ describe('User Controller Tests', () => {
         expect(response.body.username).toBe('walter');
     });
 
-    it('should update user details', async () => {
+    it('update user details', async () => {
         const response = await request(app)
             .put('/api/v1/user/update/walter')
             .send({
@@ -75,7 +75,7 @@ describe('User Controller Tests', () => {
         expect(response.body.message).toBe('user updated');
     });
 
-    it('should deactivate user account', async () => {
+    it('deactivate user account', async () => {
         const response = await request(app)
             .patch('/api/v1/user/deactivate')
             .send({
@@ -87,7 +87,7 @@ describe('User Controller Tests', () => {
         expect(response.body.message).toBe('user deactivated');
     });
 
-    it('should delete user account', async () => {
+    it('delete user account', async () => {
         const response = await request(app)
             .delete('/api/v1/user/delete')
             .send({

@@ -3,8 +3,8 @@ import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
-export default function Navbar() {
 
+export default function Navbar() {
     const handleLogout = async () => {
         const apiUrl = import.meta.env.VITE_BACKEND_ENDPOINT_URL;
         try {

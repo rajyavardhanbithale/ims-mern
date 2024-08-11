@@ -43,7 +43,6 @@ export const signup = createAsyncThunk('auth/signup', async (user, { rejectWithV
         const response = await axios.post(`${apiUrl}/api/v1/user/signup`, user);
         return response.data.message;
     } catch (error) {
-        console.log(error);
         return rejectWithValue(error.response.data);
     }
 });
@@ -52,7 +51,6 @@ export const verifyToken = createAsyncThunk('auth/verifyToken', async (path, { r
     const apiUrl = import.meta.env.VITE_BACKEND_ENDPOINT_URL;
     try {
         const response = await axios.get(`${apiUrl}/api/v1/user/verify-jwt`, { withCredentials: true });
-        console.log(response);
         if (response.status === 200) {
             window.location.href = path ? path : '/';
         }

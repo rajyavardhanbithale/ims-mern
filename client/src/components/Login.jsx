@@ -1,16 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { login, verifyToken } from '../app/slice/authSlice';
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Login() {
     const [identifier, setIdentifier] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { status, error, user } = useSelector((state) => state.auth);
-
-
 
     useEffect(() => {
         dispatch(verifyToken());
