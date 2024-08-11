@@ -1,0 +1,58 @@
+[{
+  "_id": {
+    "$oid": "66b8c4a7f9072b711db070d5"
+  },
+  "username": "john",
+  "email": "john@wick.com",
+  "password": "$2b$10$jL3.9E3ksGNnzZf4SkJaJuuPxCmejw.GmuRfjbr4UCRvS3pPv8UB2",
+  "public": true,
+  "pic": "https://avatar.iran.liara.run/public/boy?username=Ash",
+  "contact": 0,
+  "bio": "",
+  "country": "nda",
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "66b8c6d9a79c25516a03f114"
+  },
+  "username": "walter",
+  "email": "walter@test.com",
+  "password": "$2b$10$i/PLd8blMVqSVrBzPKazxuVMqc4ZrrH9QdJIvQpdrkGf.iEQu4Qli",
+  "public": false,
+  "pic": "https://avatar.iran.liara.run/public/boy?username=Ash",
+  "contact": 1234567890,
+  "bio": "Updated bio",
+  "country": "nda",
+  "isActive": false
+},
+{
+  "_id": {
+    "$oid": "66b8d0cf8cf7098c3baab622"
+  },
+  "username": "ronumupad",
+  "email": "wymizo@mailinator.com",
+  "password": "$2b$10$bFFDnBxm1yQA53JbMxE6wuIY4izONsRBJ3krL8HXUKQJYaQJTQbz2",
+  "public": true,
+  "pic": "https://avatar.iran.liara.run/public/boy?username=Ash",
+  "contact": 0,
+  "bio": "",
+  "country": "nda",
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "66b8d1708cf7098c3baab62f"
+  },
+  "username": "capab",
+  "email": "daka@mailinator.com",
+  "password": "$2b$10$zOc8rxXbNFm2IKkbKJtPnOneVBq0rkLFwGomJh2pjBwio6y1GFWy2",
+  "public": false,
+  "pic": "https://avatar.iran.liara.run/public/boy?username=Ash",
+  "contact": {
+    "$numberLong": "3223423423"
+  },
+  "bio": "",
+  "country": "nda",
+  "isActive": false
+}]

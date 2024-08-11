@@ -1,0 +1,261 @@
+{
+	"info": {
+		"_postman_id": "3cfa65dd-a368-4f9d-81f8-0be5b93cf56b",
+		"name": "Social Media Platform Development",
+		"description": "### API Endpoints\n\n#### **User Registration & Authentication**\n\n- **`POST /api/v1/user/signup`**: Register a new user. Requires a username, email, and password.\n    \n- **`POST /api/v1/user/login`**: Log in with an existing user's email and password. Returns a JWT token for authentication.\n    \n- **`GET /api/v1/user/verify-jwt`**: Verify the JWT token to confirm the user's authentication status.\n    \n\n#### **Profile Management**\n\n- **`POST /api/v1/upload/image`**: Upload a profile picture. Requires an authenticated user and an image file.\n    \n- **`GET /api/v1/user/get`**: Retrieve user details. Requires authentication and a query parameter (e.g., username).\n    \n- **`PUT /api/v1/user/update/:id`**: Update user details (e.g., bio, contact). Requires authentication and user ID.\n    \n- **`PATCH /api/v1/user/deactivate`**: Deactivate a user account. Requires authentication and user credentials.\n    \n\n#### **Account Management**\n\n- **`DELETE /api/v1/user/delete`**: Delete a user account. Requires authentication and user credentials.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21845158"
+	},
+	"item": [
+		{
+			"name": "GET USER",
+			"item": [
+				{
+					"name": "READ USER",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ENDPOINT}}/api/v1/user/get?username=john",
+							"host": [
+								"{{API_ENDPOINT}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"get"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "john"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "READ ALL USER",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_ENDPOINT}}/api/v1/user/get",
+							"host": [
+								"{{API_ENDPOINT}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"get"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CREATE USER",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"john\",\n    \"email\":\"john@wick.com\",\n    \"password\":\"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API_ENDPOINT}}/api/v1/user/signup",
+					"host": [
+						"{{API_ENDPOINT}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOGIN USER",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"john@wick.com\",\n    \"password\":\"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API_ENDPOINT}}/api/v1/user/login",
+					"host": [
+						"{{API_ENDPOINT}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE USER",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"bio\": \"hello updated bio\",\n  \"contact\":\"0232156\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API_ENDPOINT}}/api/v1/user/update/john",
+					"host": [
+						"{{API_ENDPOINT}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"update",
+						"john"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE USER",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"john@wick.com\",\n    \"password\":\"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API_ENDPOINT}}/api/v1/user/delete",
+					"host": [
+						"{{API_ENDPOINT}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DEACTIVATE USER",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"john@wick.com\",\n    \"password\":\"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API_ENDPOINT}}/api/v1/user/deactivate",
+					"host": [
+						"{{API_ENDPOINT}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"deactivate"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "API_ENDPOINT",
+			"value": "http://localhost:3001",
+			"type": "string"
+		}
+	]
+}
