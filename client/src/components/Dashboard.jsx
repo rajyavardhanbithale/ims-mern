@@ -32,7 +32,7 @@ export default function Dashboard() {
     const navigate = useNavigate();
 
     console.log(document.cookie);
-    
+
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -101,7 +101,20 @@ export default function Dashboard() {
         setActionType("deactivate");
         setShowPopup(true);
     };
+    const handleLogout = async () => {
+        const apiUrl = import.meta.env.VITE_BACKEND_ENDPOINT_URL;
+        try {
+            await axios.get(`${apiUrl}/api/v1/user/logout`, {
+                withCredentials: true
+            });
 
+            Cookies.remove('token');
+            Cookies.remove('Ltoken');
+            window.location.href = '/';
+        } catch (err) {
+            console.log(err);
+        }
+    }
     const confirmAction = async ({ email, password }) => {
         const apiUrl = import.meta.env.VITE_BACKEND_ENDPOINT_URL;
         try {
@@ -110,6 +123,7 @@ export default function Dashboard() {
                     data: { email, password },
                     withCredentials: true,
                 });
+                await handleLogout()
                 navigate("/");
             } else if (actionType === "deactivate") {
                 await axios.patch(
@@ -117,6 +131,7 @@ export default function Dashboard() {
                     { email, password },
                     { withCredentials: true }
                 );
+                await handleLogout()
                 setProfile({ ...profile, isActive: false });
             }
             setMessage(`Profile ${actionType}d successfully.`);
