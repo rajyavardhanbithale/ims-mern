@@ -60,6 +60,10 @@ app.use('/uploads', express.static('uploads'));
 app.use(`/api/${apiVersion}/user`, userRoute);
 app.use(`/api/${apiVersion}/upload`, uploadRoute(upload));
 
+// ping route
+app.get(`/ping`, (req, res) => {
+    res.status(200).json({ message: 'pong' });
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

@@ -1,54 +1,51 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import Loading from "./Loading";
-import { FaEnvelope, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
-import { AiOutlineUser } from "react-icons/ai";
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProfile } from '../app/slice/profileSlice';
+import Loading from './Loading';
+import { FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
 
 export default function Profile() {
     const { id: username } = useParams();
-    const [profile, setProfile] = useState({});
+    const dispatch = useDispatch();
+    const { data: profile, status, error } = useSelector((state) => state.profile);
+    const [localProfile, setLocalProfile] = useState(null);
 
     useEffect(() => {
-        const fetchProfile = async () => {
-            const apiUrl = import.meta.env.VITE_BACKEND_ENDPOINT_URL;
-            try {
-                const res = await axios.get(
-                    `${apiUrl}/api/v1/user/get?username=${username}`,
-                    { withCredentials: true }
-                );
-                if (res.status === 200) {
-                    setProfile(res.data);
-                }
-            } catch (err) {
-                console.error("Error fetching profile:", err);
-            }
-        };
+        setLocalProfile(null);
+        dispatch(fetchProfile(username));
+    }, []);
 
-        fetchProfile();
-    }, [username]);
+    useEffect(() => {
+        if (profile) {
+            setLocalProfile(profile);
+        }
+    }, [profile]);
+
 
     const handleProfilePic = () => {
-        const image = profile.pic.split(":");
+        const image = profile.pic?.split(":");
 
-        if (image.includes("http") || image.includes("https")) {
+        if (image?.includes("http") || image?.includes("https")) {
             return profile.pic;
         }
         return `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/uploads/${profile.pic}`;
     };
 
+    if (status === 'loading') return <Loading />;
+    if (status === 'failed') return <div className="text-red-500 text-center">Error: {error?.message}</div>;
+
+
     return (
         <>
-            {!profile.username && <Loading />}
-
-            {profile.username && (
+            {localProfile &&
                 <div className="min-h-screen bg-slate-50 flex flex-col justify-center items-center py-10 px-4">
                     <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden">
                         <div className="w-full h-64 flex justify-center items-center align-middle overflow-hidden">
                             <img
                                 className="w-64 h-full rounded-2xl object-cover hover:scale-105 transform transition-transform duration-300"
                                 src={handleProfilePic()}
-                                alt={`${profile.username}'s profile`}
+                                alt={`${localProfile.username}'s profile`}
                             />
                         </div>
                         <div className="p-8">
@@ -78,7 +75,7 @@ export default function Profile() {
                                         Contact
                                     </h3>
                                     <p className="text-xl text-slate-700">
-                                        {profile?.contact === 0
+                                        {profile.contact === 0
                                             ? "Contact not available"
                                             : profile.contact}
                                     </p>
@@ -88,7 +85,7 @@ export default function Profile() {
                                         Bio
                                     </h3>
                                     <p className="text-xl text-slate-700">
-                                        {profile?.bio?.length > 0
+                                        {profile.bio?.length > 0
                                             ? profile.bio
                                             : "No bio available"}
                                     </p>
@@ -97,7 +94,8 @@ export default function Profile() {
                         </div>
                     </div>
                 </div>
-            )}
+            }
+            {!localProfile && <Loading />}
         </>
     );
 }

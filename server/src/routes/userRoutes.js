@@ -1,5 +1,5 @@
 import express from 'express';
-import { deactivateUser, getUser, login, deleteUser, signup, updateUser } from '../controllers/userController.js';
+import { deactivateUser, getUser, login, deleteUser, signup, updateUser, logout } from '../controllers/userController.js';
 import authMiddleware from "../middleware/auth.js";
 
 // defining express router
@@ -8,7 +8,7 @@ const router = express.Router();
 // public routes
 router.post('/signup', signup);
 router.post('/login', login);
-
+router.get('/logout', logout);
 
 // private routes with auth middleware
 router.get('/get', authMiddleware, getUser);

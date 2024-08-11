@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import asyncHandler from "../middleware/asyncHandler.js";
 
 /**
  * @SIGNUP_USER
@@ -83,7 +84,9 @@ export const login = async (req, res) => {
 
         res.cookie('token', token, {
             secure: process.env.NODE_ENV === 'production',
+            secure: true,
             maxAge: 24 * 60 * 60 * 1000,
+            sameSite: 'None',
         });
         return res.status(200).json({ result: user, token });
     }
@@ -228,5 +231,21 @@ export const deactivateUser = async (req, res) => {
         return res.status(400).json({ message: err.message });
     }
 }
+
+export const logout = asyncHandler(
+    async (req, res) => {
+        res.cookie('token', null, {
+            secure: process.env.NODE_ENV === 'production' ? true : false,
+            maxAge: 0,
+            httpOnly: true,
+        });
+
+        // Sending the response
+        res.status(200).json({
+            success: true,
+            message: 'User logged out successfully',
+        });
+    }
+)
 
 export default { signup, login, getUser, updateUser, deleteUser, deactivateUser };

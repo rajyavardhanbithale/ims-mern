@@ -33,3 +33,7 @@ server/node_modules/
 *.tgz
 *.lock
 
+
+#vercel
+/server/.vercel
+/server/vercel.json

@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import { AiOutlineUser, AiOutlineDelete, AiOutlineMail, AiOutlinePhone, AiOutlinePayCircle } from "react-icons/ai";
 import { HiOutlineEyeOff } from "react-icons/hi";
 import ConfirmPopup from "./ConfirmPopup";
+import Loading from "./Loading";
 
 export default function Dashboard() {
     const [profile, setProfile] = useState({
@@ -30,12 +31,17 @@ export default function Dashboard() {
     const [actionType, setActionType] = useState("");
     const navigate = useNavigate();
 
+
+    console.log(document.cookie);
+
     useEffect(() => {
         const fetchProfile = async () => {
             const apiUrl = import.meta.env.VITE_BACKEND_ENDPOINT_URL;
             const userJWT = Cookies.get("token");
+            console.log(userJWT);
             const decoded = jwtDecode(userJWT);
 
+            
             try {
                 const res = await axios.get(
                     `${apiUrl}/api/v1/user/get?username=${decoded.username}`,
@@ -162,190 +168,196 @@ export default function Dashboard() {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 flex flex-col items-center py-10 px-4">
-            <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl p-8">
-                <h1 className="text-3xl font-bold mb-6 text-center text-slate-900">
-                    Profile Dashboard
-                </h1>
-                <div className="space-y-6">
-                    <div className="text-center">
-                        <label className="block text-base font-medium text-slate-700 mb-2 ml-2">
-                            Profile Picture
-                        </label>
-                        <div className="flex justify-center items-center">
-                            <img
-                                src={handleProfilePic()}
-                                alt="Profile"
-                                className="w-32 h-32 object-cover rounded-full border border-slate-300"
-                            />
+        <>
+            {profile.username.length !== 0 &&
+                <div className="min-h-screen bg-slate-50 flex flex-col items-center py-10 px-4">
+                    <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl p-8">
+                        <h1 className="text-3xl font-bold mb-6 text-center text-slate-900">
+                            Profile Dashboard
+                        </h1>
+                        <div className="space-y-6">
+                            <div className="text-center">
+                                <label className="block text-base font-medium text-slate-700 mb-2 ml-2">
+                                    Profile Picture
+                                </label>
+                                <div className="flex justify-center items-center">
+                                    <img
+                                        src={handleProfilePic()}
+                                        alt="Profile"
+                                        className="w-32 h-32 object-cover rounded-full border border-slate-300"
+                                    />
+                                </div>
+
+                                <div className="flex justify-center items-center gap-5 mt-5">
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleImageUpload}
+                                        className="py-1 px-4"
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="block text-base font-medium text-slate-700 mb-2 ml-2">
+                                    <AiOutlineUser className="inline-flex mb-0.5 mr-2 text-lg" />
+                                    Username
+                                </label>
+                                <input
+                                    type="text"
+                                    value={profile.username}
+                                    readOnly
+                                    className="w-full py-2 px-4 border border-slate-300 rounded-full shadow-sm bg-slate-100 outline-none"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-base font-medium text-slate-700 mb-2 ml-2">
+                                    <AiOutlineMail className="inline-flex mb-0.5 mr-2 text-lg" />
+                                    Email
+                                </label>
+                                <input
+                                    type="email"
+                                    value={profile.email}
+                                    readOnly
+                                    className="w-full py-2 px-4 border border-slate-300 rounded-full shadow-sm bg-slate-100 outline-none"
+                                />
+                            </div>
+
+                            <div className="flex items-center gap-3">
+                                <label className="block text-base font-medium text-slate-700 ml-2">
+                                    Public
+                                </label>
+                                <input
+                                    type="checkbox"
+                                    checked={profile.public}
+                                    onChange={handlePublicChange}
+                                    className="mr-2"
+                                />
+                            </div>
+
+                            <div className="flex gap-5 justify-between">
+                                <div className="w-1/2">
+                                    <label
+                                        htmlFor="contact"
+                                        className="block text-base font-medium text-slate-700 mb-2 ml-2"
+                                    >
+                                        <AiOutlinePhone className="inline-flex mb-0.5 mr-2 text-lg" />
+                                        Contact
+                                    </label>
+                                    <input
+                                        id="contact"
+                                        type="text"
+                                        placeholder="Enter your contact information"
+                                        value={editableFields.contact}
+                                        onChange={(e) =>
+                                            setEditableFields({
+                                                ...editableFields,
+                                                contact: e.target.value,
+                                            })
+                                        }
+                                        className="w-full py-2 px-4 border border-slate-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                <div className="w-1/2">
+                                    <label
+                                        htmlFor="country"
+                                        className="block text-base font-medium text-slate-700 mb-2 ml-2"
+                                    >
+                                        <AiOutlinePayCircle className="inline-flex mb-0.5 mr-2 text-lg" />
+                                        Country
+                                    </label>
+                                    <input
+                                        id="country"
+                                        type="text"
+                                        placeholder="Enter your country"
+                                        value={editableFields.country}
+                                        onChange={(e) =>
+                                            setEditableFields({
+                                                ...editableFields,
+                                                country: e.target.value,
+                                            })
+                                        }
+                                        className="w-full py-2 px-4 border border-slate-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <label
+                                    htmlFor="bio"
+                                    className="block text-base font-medium text-slate-700 mb-2 ml-2"
+                                >
+                                    Bio
+                                </label>
+                                <textarea
+                                    id="bio"
+                                    placeholder="Tell us about yourself"
+                                    value={editableFields.bio}
+                                    onChange={(e) =>
+                                        setEditableFields({
+                                            ...editableFields,
+                                            bio: e.target.value,
+                                        })
+                                    }
+                                    className="w-full py-2 px-4 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    rows="4"
+                                />
+                            </div>
+
+                            <div className="flex justify-end space-x-4">
+                                <button
+                                    type="button"
+                                    onClick={handleCancel}
+                                    className="py-2 px-4 bg-slate-300 text-slate-800 font-semibold rounded-full shadow-sm hover:bg-slate-400 duration-300"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={handleSave}
+                                    className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-full shadow-sm hover:bg-blue-600 duration-300"
+                                >
+                                    Save Changes
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={handleDeactivate}
+                                    className="py-2 px-4 bg-yellow-500 text-white font-semibold rounded-full shadow-sm hover:bg-yellow-600 duration-300"
+                                >
+                                    <HiOutlineEyeOff className="inline-flex mb-0.5 mr-2 text-lg" />
+                                    Deactivate
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={handleDelete}
+                                    className="py-2 px-4 bg-red-500 text-white font-semibold rounded-full shadow-sm hover:bg-red-600 duration-300"
+                                >
+                                    <AiOutlineDelete className="inline-flex mb-0.5 mr-2 text-lg" />
+                                    Delete
+                                </button>
+                            </div>
                         </div>
 
-                        <div className="flex justify-center items-center gap-5 mt-5">
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={handleImageUpload}
-                                className="py-1 px-4"
-                            />
-                        </div>
-                    </div>
-
-                    <div>
-                        <label className="block text-base font-medium text-slate-700 mb-2 ml-2">
-                            <AiOutlineUser className="inline-flex mb-0.5 mr-2 text-lg" />
-                            Username
-                        </label>
-                        <input
-                            type="text"
-                            value={profile.username}
-                            readOnly
-                            className="w-full py-2 px-4 border border-slate-300 rounded-full shadow-sm bg-slate-100 outline-none"
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block text-base font-medium text-slate-700 mb-2 ml-2">
-                            <AiOutlineMail className="inline-flex mb-0.5 mr-2 text-lg" />
-                            Email
-                        </label>
-                        <input
-                            type="email"
-                            value={profile.email}
-                            readOnly
-                            className="w-full py-2 px-4 border border-slate-300 rounded-full shadow-sm bg-slate-100 outline-none"
-                        />
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                        <label className="block text-base font-medium text-slate-700 ml-2">
-                            Public
-                        </label>
-                        <input
-                            type="checkbox"
-                            checked={profile.public}
-                            onChange={handlePublicChange}
-                            className="mr-2"
-                        />
-                    </div>
-
-                    <div className="flex gap-5 justify-between">
-                        <div className="w-1/2">
-                            <label
-                                htmlFor="contact"
-                                className="block text-base font-medium text-slate-700 mb-2 ml-2"
+                        {message && (
+                            <div
+                                className={`capitalize mt-4 p-2 text-center text-xl font-medium ${isError ? "text-red-500" : "text-green-500"}`}
                             >
-                                <AiOutlinePhone className="inline-flex mb-0.5 mr-2 text-lg" />
-                                Contact
-                            </label>
-                            <input
-                                id="contact"
-                                type="text"
-                                placeholder="Enter your contact information"
-                                value={editableFields.contact}
-                                onChange={(e) =>
-                                    setEditableFields({
-                                        ...editableFields,
-                                        contact: e.target.value,
-                                    })
-                                }
-                                className="w-full py-2 px-4 border border-slate-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                        </div>
-                        <div className="w-1/2">
-                            <label
-                                htmlFor="country"
-                                className="block text-base font-medium text-slate-700 mb-2 ml-2"
-                            >
-                                <AiOutlinePayCircle className="inline-flex mb-0.5 mr-2 text-lg" />
-                                Country
-                            </label>
-                            <input
-                                id="country"
-                                type="text"
-                                placeholder="Enter your country"
-                                value={editableFields.country}
-                                onChange={(e) =>
-                                    setEditableFields({
-                                        ...editableFields,
-                                        country: e.target.value,
-                                    })
-                                }
-                                className="w-full py-2 px-4 border border-slate-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                        </div>
+                                {message}
+                            </div>
+                        )}
                     </div>
 
-                    <div>
-                        <label
-                            htmlFor="bio"
-                            className="block text-base font-medium text-slate-700 mb-2 ml-2"
-                        >
-                            Bio
-                        </label>
-                        <textarea
-                            id="bio"
-                            placeholder="Tell us about yourself"
-                            value={editableFields.bio}
-                            onChange={(e) =>
-                                setEditableFields({
-                                    ...editableFields,
-                                    bio: e.target.value,
-                                })
-                            }
-                            className="w-full py-2 px-4 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            rows="4"
-                        />
-                    </div>
-
-                    <div className="flex justify-end space-x-4">
-                        <button
-                            type="button"
-                            onClick={handleCancel}
-                            className="py-2 px-4 bg-slate-300 text-slate-800 font-semibold rounded-full shadow-sm hover:bg-slate-400 duration-300"
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleSave}
-                            className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-full shadow-sm hover:bg-blue-600 duration-300"
-                        >
-                            Save Changes
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleDeactivate}
-                            className="py-2 px-4 bg-yellow-500 text-white font-semibold rounded-full shadow-sm hover:bg-yellow-600 duration-300"
-                        >
-                            <HiOutlineEyeOff className="inline-flex mb-0.5 mr-2 text-lg" />
-                            Deactivate
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleDelete}
-                            className="py-2 px-4 bg-red-500 text-white font-semibold rounded-full shadow-sm hover:bg-red-600 duration-300"
-                        >
-                            <AiOutlineDelete className="inline-flex mb-0.5 mr-2 text-lg" />
-                            Delete
-                        </button>
-                    </div>
+                    <ConfirmPopup
+                        isOpen={showPopup}
+                        onClose={() => setShowPopup(false)}
+                        onConfirm={confirmAction}
+                        action={actionType}
+                    />
                 </div>
+            }
 
-                {message && (
-                    <div
-                        className={`capitalize mt-4 p-2 text-center text-xl font-medium ${isError ? "text-red-500" : "text-green-500"}`}
-                    >
-                        {message}
-                    </div>
-                )}
-            </div>
-
-            <ConfirmPopup
-                isOpen={showPopup}
-                onClose={() => setShowPopup(false)}
-                onConfirm={confirmAction}
-                action={actionType}
-            />
-        </div>
+            {profile.username.length === 0 && <Loading />}
+        </>
     );
 }
