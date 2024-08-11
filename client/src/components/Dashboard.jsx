@@ -31,6 +31,9 @@ export default function Dashboard() {
     const [actionType, setActionType] = useState("");
     const navigate = useNavigate();
 
+    console.log(document.cookie);
+    
+
     useEffect(() => {
         const fetchProfile = async () => {
             const apiUrl = import.meta.env.VITE_BACKEND_ENDPOINT_URL;
@@ -38,7 +41,7 @@ export default function Dashboard() {
             const decoded = jwtDecode(userJWT);
 
             console.log(decoded);
-            
+
             try {
                 const res = await axios.get(
                     `${apiUrl}/api/v1/user/get?username=${decoded.username}`,
