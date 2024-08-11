@@ -20,7 +20,7 @@ This project is a full-stack application for managing inventory, built using the
 - **Backend**: [https://ims-mern.vercel.app](https://ims-mern.vercel.app/)
 
 ## Deployment Issues
-
+- **Slow Data Fetching**: If your facing "user not found" in home page, wait for some time as it fetching data from the database
 - **Image Upload**: Image uploads may not work properly on Vercel's free hobby plan due to storage and bandwidth limitations.
 - **Different Site URLs**: Make sure to handle CORS issues and configure environment variables to match your deployment URLs.
 
